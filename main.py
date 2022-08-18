@@ -2,16 +2,16 @@
 # python expenseProcesser.py <path to input_file>
 # input_file: input expense statement file in .txt form
 
+# Future Implementations
+# 1. Scheduled tasks with Airflow every month when expense statements come in
+# 2. Use JS React or Flask for front-end interface
+# 3. Use some sort of ML model to make classifications of the payments
+
 # Import statements
 import sys
 
 # Take in input files
 statement_in = sys.argv[1]
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
 
 
 def process_inputs(file_in):
@@ -45,8 +45,9 @@ def print_statement(file_to_print):
                 formatted_line += curr_line[j]
         print(curr_line)
 
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    process_inputs(statement_in)
+    statement_processed = process_inputs(statement_in)
 
 
