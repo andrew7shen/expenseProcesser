@@ -10,7 +10,6 @@
 # Import statements
 import sys
 import PyPDF2
-# import pandas as pd
 from class_files import Transaction
 
 # Take in input files
@@ -22,7 +21,7 @@ def process_inputs(file_in):
     """
     Converts just page number 3 of expense statement input file into string format
     :param file_in: input expense statement in PDF format
-    :return: file_in_processed
+    :return: file_in_str: string version of input expense statement
     """
     # Reading in PDF input file in "rb" form, read and binary
     with open(file_in, "rb") as pdf_obj:
@@ -32,6 +31,33 @@ def process_inputs(file_in):
         file_in_str = page_obj.extractText()
         pdf_obj.close()
     return file_in_str
+
+
+def make_transaction_list(input_str):
+    """
+    Converts info in input expense statement (page 3) to transactions and returns list of transactions
+    :param input_str: string version of input expense statement
+    :return: transact_list: list of transactions
+    """
+    transact_list = []
+    input_str_lines = input_str.splitlines()
+    # Extract just the transaction info
+    start = 8
+    end = None
+    # Find index of last occurrence of transaction
+    for i in range(len(input_str_lines)):
+        curr_line = input_str_lines[i]
+        if "TOTAL PURCHASES AND ADJUSTMENTS FOR THIS PERIOD" in curr_line:
+            end = i
+            break
+    input_str_lines = input_str_lines[start:end]
+    # Populate transact_list with transactions
+    for i in range(len(input_str_lines)):
+        curr_line_split = input_str_lines[i].split("\t")
+        print(curr_line_split)
+        # TO-DO: need to create Transaction objects from each line of transaction info
+        # transact_list.append(Transaction)
+    return transact_list
 
 
 def print_statement(file_to_print):
@@ -54,7 +80,8 @@ def print_statement(file_to_print):
 # Main function
 if __name__ == '__main__':
     statement_processed = process_inputs(statement_in)
-    #print(statement_processed)
+    transaction_list = make_transaction_list(statement_processed)
+    # print(statement_processed)
 
     # Test transaction object creation
     test_transact = Transaction(1, 12, "8/23", "8/25", "test transaction")
