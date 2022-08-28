@@ -54,8 +54,9 @@ def print_statement(file_to_print):
 # Main function
 if __name__ == '__main__':
     statement_processed = process_inputs(statement_in)
-    print(statement_processed)
+    #print(statement_processed)
 
     # Test transaction object creation
     test_transact = Transaction(1, 12, "8/23", "8/25", "test transaction")
+    # test_transact.print_transaction()
     # print(test_transact.amount)

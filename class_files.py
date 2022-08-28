@@ -16,3 +16,10 @@ class Transaction:
         self.transact_date = transact_date
         self.post_date = post_date
         self.info = info
+
+    def print_transaction(self):
+        print("Amount: %s\n"
+              "Reference Number: %s\n"
+              "Transaction Date: %s\n"
+              "Post Date: %s\n"
+              "Transaction Info: %s" % (self.amount, self.ref_num, self.transact_date, self.post_date, self.info))
