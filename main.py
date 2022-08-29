@@ -54,10 +54,25 @@ def make_transaction_list(input_str):
     # Populate transact_list with transactions
     for i in range(len(input_str_lines)):
         curr_line_split = input_str_lines[i].split("\t")
-        print(curr_line_split)
+        # print(curr_line_split)
         # TO-DO: need to create Transaction objects from each line of transaction info
         # transact_list.append(Transaction)
     return transact_list
+
+
+def make_transaction_object(expense_str):
+    """
+    Helper function to convert transaction string from input file into transaction object
+    :param expense_str: string containing contents of one transaction row from
+    :return: Transaction object from the transaction string
+    """
+    temp = expense_str.split()
+    amount = temp[-1]
+    ref_num = temp[-3]
+    transact_date = "".join(temp[2:-3])
+    post_date = temp[1]
+    info = temp[0]
+    return Transaction(amount, ref_num, transact_date, post_date, info)
 
 
 def print_statement(file_to_print):
