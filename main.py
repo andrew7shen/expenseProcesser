@@ -53,10 +53,8 @@ def make_transaction_list(input_str):
     input_str_lines = input_str_lines[start:end]
     # Populate transact_list with transactions
     for i in range(len(input_str_lines)):
-        curr_line_split = input_str_lines[i].split("\t")
-        # print(curr_line_split)
-        # TO-DO: need to create Transaction objects from each line of transaction info
-        # transact_list.append(Transaction)
+        curr_line = input_str_lines[i]
+        transact_list.append(make_transaction_object(curr_line))
     return transact_list
 
 
@@ -69,12 +67,13 @@ def make_transaction_object(expense_str):
     temp = expense_str.split()
     amount = temp[-1]
     ref_num = temp[-3]
-    transact_date = "".join(temp[2:-3])
+    transact_date = " ".join(temp[2:-3])
     post_date = temp[1]
     info = temp[0]
     return Transaction(amount, ref_num, transact_date, post_date, info)
 
 
+# Outdated
 def print_statement(file_to_print):
     """
     Helper function to print out current status of expense statement
@@ -96,9 +95,6 @@ def print_statement(file_to_print):
 if __name__ == '__main__':
     statement_processed = process_inputs(statement_in)
     transaction_list = make_transaction_list(statement_processed)
-    # print(statement_processed)
-
-    # Test transaction object creation
-    test_transact = Transaction(1, 12, "8/23", "8/25", "test transaction")
-    # test_transact.print_transaction()
-    # print(test_transact.amount)
+    for t in transaction_list:
+        t.print_transaction()
+        print()
