@@ -1,11 +1,12 @@
 # Andrew Shen, 07/03/2022
-# python expenseProcesser.py <path to input_file>
+# python expenseProcesser <path to input_file>
 # input_file: input expense statement file in .txt form
 
 # Future Steps
 # 1. Use JS React or Flask for front-end interface: can query different variables and make different categories
 # 2. Scheduled tasks with Airflow every month when expense statements come in
 # 3. Use some sort of ML model to make classifications of the payments
+# 4. Store transaction data in some datastore (AWS, Azure?)
 
 # Import statements
 import sys
