@@ -10,18 +10,41 @@
 
 # Import statements
 import sys
+import os
 import PyPDF2
 from class_files import Transaction
 
 # Take in input files
-statement_in = sys.argv[1]
+dir_in = sys.argv[1]
 
 
 # Functions
+def convert_all(dir_path):
+    """
+    Takes in directory path containing multiple PDF bank statements and outputs a list of all transactions
+    :param dir_path: Path to directory containing bank statements
+    :return: concatenated string with all the transaction information for all bank statements
+    """
+    all_transact_list = []
+    pdf_paths = []
+    # Keeps only files in "dir_path" with .pdf extension
+    for p in os.listdir(dir_path):
+        name, ext = os.path.splitext(p)
+        if ext == ".pdf":
+            pdf_paths.append("%s/%s" % (dir_path, p))
+    # Runs full process_inputs --> make_transaction_list pipeline on all input files
+    for path in pdf_paths:
+        curr_str = process_inputs(path)
+        curr_list = make_transaction_list(curr_str)
+        # Adds list of transactions to "all_transact_list"
+        all_transact_list.extend(curr_list)
+    return all_transact_list
+
+
 def process_inputs(file_in):
     """
-    Converts just page number 3 of expense statement input file into string format
-    :param file_in: input expense statement in PDF format
+    Converts just page number 3 of PDF expense statement input file into string format
+    :param file_in: path to input expense statement in PDF format
     :return: file_in_str: string version of input expense statement
     """
     # Reading in PDF input file in "rb" form, read and binary
@@ -45,9 +68,11 @@ def make_transaction_list(input_str):
     # Extract just the transaction info
     start = 8
     end = None
-    # Find index of last occurrence of transaction
+    # Find index of first and last occurrence of transaction
     for i in range(len(input_str_lines)):
         curr_line = input_str_lines[i]
+        if "Purchases and Adjustments" in curr_line:
+            start = i+1
         if "TOTAL PURCHASES AND ADJUSTMENTS FOR THIS PERIOD" in curr_line:
             end = i
             break
@@ -66,12 +91,12 @@ def make_transaction_object(expense_str):
     :return: Transaction object from the transaction string
     """
     temp = expense_str.split()
-    amount = temp[-1]
-    ref_num = temp[-3]
-    transact_date = " ".join(temp[2:-3])
+    transact_date = temp[0]
     post_date = temp[1]
-    info = temp[0]
-    return Transaction(amount, ref_num, transact_date, post_date, info)
+    info = " ".join(temp[2:-3])
+    ref_num = temp[-3]
+    amount = temp[-1]
+    return Transaction(transact_date, post_date, info, ref_num, amount)
 
 
 # Outdated
@@ -94,8 +119,6 @@ def print_statement(file_to_print):
 
 # Main function
 if __name__ == '__main__':
-    statement_processed = process_inputs(statement_in)
-    transaction_list = make_transaction_list(statement_processed)
-    for t in transaction_list:
-        t.print_transaction()
-        print()
+    all_transactions = convert_all(dir_in)
+    for t in all_transactions:
+        t.print_transaction_short()
