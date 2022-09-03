@@ -1,6 +1,6 @@
 # Andrew Shen, 07/03/2022
 # python expenseProcesser <path to input_file>
-# input_file: input expense statement file in .txt form
+# input_file: path to directory containing PDF expense reports
 
 # Future Steps
 # 1. Use JS React or Flask for front-end interface: can query different variables and make different categories
