@@ -99,6 +99,22 @@ def make_transaction_object(expense_str):
     return Transaction(transact_date, post_date, info, ref_num, amount)
 
 
+# Future Functions
+def deceasing_category(var_category):
+    """
+    Returns organized transaction info from lowets to highest by specific variable category.
+    :param var_category:
+    :return:
+    """
+
+
+def increasing_category(var_category):
+    """
+    Returns organized transaction info from highest to lowest by specific variable category.
+    :param var_category:
+    :return:
+    """
+
 # Outdated
 def print_statement(file_to_print):
     """
