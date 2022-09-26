@@ -115,6 +115,14 @@ def increasing_category(var_category):
     :return:
     """
 
+
+def visualize():
+    """
+    Returns objects for site visualization
+    :return:
+    """
+
+
 # Outdated
 def print_statement(file_to_print):
     """
